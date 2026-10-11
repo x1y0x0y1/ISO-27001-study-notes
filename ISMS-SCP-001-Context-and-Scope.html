@@ -1,0 +1,534 @@
+<title>ISMS-SCP-001 Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,650&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column like a controlled document, with a document-control header and colour-coded margin notes inline */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#1b2230; --muted:#5a6475; --line:#dde1e8; --ink:#24324a;
+  --purple:#6b3fa0; --purple-bg:#f3eefa; --purple-line:#c9b4e6;
+  --blue:#1f5fae;   --blue-bg:#ecf3fc;   --blue-line:#a9c6ea;
+  --orange:#b35a00; --orange-bg:#fdf2e6; --orange-line:#f0c48f;
+  --green:#2e7d4f;  --green-bg:#ebf6ef;  --green-line:#a8d5b8;
+  --display:"Literata", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151b; --surface:#1a1f28; --fg:#e4e8ef; --muted:#9aa4b5; --line:#2d3441; --ink:#c9d4e6;
+  --purple:#c4a6ef; --purple-bg:#261d33; --purple-line:#4d3a6b;
+  --blue:#8dbdf2;   --blue-bg:#16253a;   --blue-line:#2c4a70;
+  --orange:#f2ad66; --orange-bg:#2e2114; --orange-line:#6a4520;
+  --green:#7fd3a0;  --green-bg:#15281d;  --green-line:#2f5a40;
+  color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#12151b; --surface:#1a1f28; --fg:#e4e8ef; --muted:#9aa4b5; --line:#2d3441; --ink:#c9d4e6;
+  --purple:#c4a6ef; --purple-bg:#261d33; --purple-line:#4d3a6b;
+  --blue:#8dbdf2;   --blue-bg:#16253a;   --blue-line:#2c4a70;
+  --orange:#f2ad66; --orange-bg:#2e2114; --orange-line:#6a4520;
+  --green:#7fd3a0;  --green-bg:#15281d;  --green-line:#2f5a40;
+  color-scheme:dark;}
+
+body{background:var(--bg);color:var(--fg);font:16px/1.65 var(--body);}
+.wrap{max-width:860px;margin:0 auto;padding-inline:20px;padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:650}
+h2{font-size:1.5rem;font-weight:650}
+h3{font-size:1.1rem;font-weight:650}
+p{margin:0;max-width:68ch}
+ul,ol{margin:0;padding-left:1.25rem;max-width:66ch}
+li+li{margin-top:4px}
+code,.clause{font-family:var(--mono);font-size:.86em}
+.clause{display:inline-block;padding:1px 7px;border:1px solid var(--line);border-radius:4px;color:var(--muted);background:var(--surface);white-space:nowrap}
+
+/* document control block */
+.doc{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.doc-top{padding:24px 24px 20px;display:flex;flex-direction:column;gap:10px}
+.eyebrow{font:500 .75rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.doc-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid var(--line)}
+.doc-meta div{padding:10px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.doc-meta div:last-child{border-right:0}
+.doc-meta span{font:500 .7rem/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.doc-meta b{font:500 .9rem/1.3 var(--mono)}
+
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;padding:6px 12px;border-radius:999px;border:1px solid}
+.chip i{width:10px;height:10px;border-radius:50%;display:block}
+.chip.p{color:var(--purple);border-color:var(--purple-line);background:var(--purple-bg)} .chip.p i{background:var(--purple)}
+.chip.b{color:var(--blue);border-color:var(--blue-line);background:var(--blue-bg)} .chip.b i{background:var(--blue)}
+.chip.o{color:var(--orange);border-color:var(--orange-line);background:var(--orange-bg)} .chip.o i{background:var(--orange)}
+
+/* contents */
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem}
+nav.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--ink);outline:none}
+
+section{display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.sec-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.sec-head .num{font:500 1rem var(--mono);color:var(--muted)}
+
+/* colour notes */
+.note{border:1px solid;border-radius:6px;padding:12px 16px;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.note .tag{font:600 .72rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.note.p{background:var(--purple-bg);border-color:var(--purple-line)} .note.p .tag{color:var(--purple)}
+.note.b{background:var(--blue-bg);border-color:var(--blue-line)} .note.b .tag{color:var(--blue)}
+.note.o{background:var(--orange-bg);border-color:var(--orange-line)} .note.o .tag{color:var(--orange)}
+.note p,.note li{color:var(--fg)}
+.chip.g{color:var(--green);border-color:var(--green-line);background:var(--green-bg)} .chip.g i{background:var(--green)}
+.norm{background:var(--green-bg);border:1px solid var(--green-line);border-radius:6px;padding:16px 20px;display:flex;flex-direction:column;gap:10px;max-width:72ch}
+.norm .tag{font:600 .72rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.norm h3{color:var(--green);font-size:1.02rem}
+.norm .note-iso{font-size:.88rem;color:var(--muted);padding-left:12px;border-left:2px solid var(--green-line)}
+.norm .amd{font-size:.92rem;padding:8px 12px;border:1px dashed var(--green-line);border-radius:4px}
+.norm ol{list-style:none;padding-left:0}
+.norm + .norm{margin-top:-4px}
+.ex{border:1px dashed var(--ink);border-radius:6px;padding:14px 18px;display:flex;flex-direction:column;gap:8px;max-width:72ch;background:var(--surface)}
+.ex .tag{font:600 .72rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.ex .tbl{border-color:var(--line)}
+.chip.x{color:var(--ink);border-color:var(--ink);border-style:dashed;background:var(--surface)} .chip.x i{background:var(--ink)}
+.howto{display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.howto ol{display:flex;flex-direction:column;gap:4px}
+.tpl{font-family:var(--mono);font-size:.92rem;padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;max-width:72ch}
+.tpl em{color:var(--blue);font-style:normal}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:560px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{font:600 .75rem/1.3 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;color:var(--ink)}
+.swot{min-width:520px}
+.swot td{width:42%} .swot td:first-child{width:16%}
+.pill{font:500 .75rem var(--mono);padding:1px 7px;border-radius:4px;border:1px solid var(--line);white-space:nowrap}
+
+/* flow */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-size:.88rem;display:flex;flex-direction:column}
+.step b{font:500 .75rem var(--mono);color:var(--muted)}
+.arrow{color:var(--muted);font-family:var(--mono)}
+
+.scope{font-family:var(--display);font-size:1.08rem;line-height:1.55;padding:16px 20px;border-left:3px solid var(--ink);background:var(--surface);border-radius:0 6px 6px 0;max-width:68ch}
+
+details{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+details+details{margin-top:-6px}
+summary{cursor:pointer;font-weight:500}
+summary:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+details p{margin-top:8px;color:var(--muted)}
+footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+</style>
+
+<div class="wrap">
+
+<header class="doc">
+  <div class="doc-top">
+    <span class="eyebrow">ISO/IEC 27001:2022 · Clause 4 · Study notes</span>
+    <h1>ISMS-SCP-001: Context and Scope</h1>
+    <p>How to build the first document of an ISMS: Understanding the organisation, its interested parties, and where the ISMS starts and stops. Each section gives a general method you can apply to any organisation, followed by a worked example from my notes.</p>
+  </div>
+  <div class="doc-meta">
+    <div><span>Doc ID</span><b>ISMS-SCP-001</b></div>
+    <div><span>Clauses</span><b>4.1 · 4.2 · 4.3</b></div>
+    <div><span>Feeds into</span><b>6.1 · 6.2 · 9.3</b></div>
+    <div><span>Review</span><b>Annual + MR</b></div>
+  </div>
+</header>
+
+<div class="legend" aria-label="Colour legend">
+  <span class="chip p"><i></i>Purple: Concept explained simply</span>
+  <span class="chip b"><i></i>Blue: What the standard requires</span>
+  <span class="chip o"><i></i>Orange: Auditor tip / common mistake</span>
+  <span class="chip g"><i></i>Green: ISO 27001 text (reference)</span>
+  <span class="chip x"><i></i>Dashed: Worked example from my notes</span>
+</div>
+
+<nav class="toc" aria-label="Contents">
+  <a href="#big-picture">Big picture</a>
+  <a href="#purpose">1 Purpose</a>
+  <a href="#issues">2 Issues (4.1)</a>
+  <a href="#parties">3 Interested parties (4.2)</a>
+  <a href="#scope">4 Scope (4.3)</a>
+  <a href="#review">5 Review</a>
+  <a href="#check">Check yourself</a>
+  <a href="#norm">ISO 27001 text</a>
+</nav>
+
+<!-- BIG PICTURE -->
+<section id="big-picture">
+  <div class="sec-head"><h2>The big picture</h2></div>
+  <div class="note p">
+    <span class="tag">Concept</span>
+    <p>Clause 4 answers three questions before any control is chosen. <b>Who are we and what is happening around us?</b> (4.1). <b>Who cares about our information security, and what do they want?</b> (4.2). <b>So what exactly are we protecting?</b> (4.3). Everything later in the ISMS (risk assessment, objectives, controls) builds on these answers.</p>
+  </div>
+  <div class="flow" aria-label="How clause 4 connects to the rest of the ISMS">
+    <div class="step"><b>4.1</b>Issues</div><span class="arrow">+</span>
+    <div class="step"><b>4.2</b>Interested parties</div><span class="arrow">→</span>
+    <div class="step"><b>4.3</b>Scope</div><span class="arrow">→</span>
+    <div class="step"><b>6.1</b>Risks &amp; opportunities</div><span class="arrow">→</span>
+    <div class="step"><b>6.2</b>Objectives</div><span class="arrow">→</span>
+    <div class="step"><b>9.3</b>Management review</div><span class="arrow">↺ back to 4.1</span>
+  </div>
+  <div class="note o">
+    <span class="tag">Auditor tip</span>
+    <p><b>Document all three: Issues (4.1), interested parties (4.2) and scope (4.3).</b> Clause 4.3 states it directly for the scope: "The scope shall be available as documented information." For 4.1 and 4.2, the need to document comes from other clauses: 7.5.1 b, Annex A 5.31 and 9.3.2 b/c (explained in "Check yourself" below). In practice, one combined context-and-scope document covers all three.</p>
+  </div>
+</section>
+
+<!-- 1 PURPOSE -->
+<section id="purpose">
+  <div class="sec-head"><span class="num">01</span><h2>Purpose</h2></div>
+  <p>A short paragraph saying why the document exists. Example wording:</p>
+  <div class="scope">This document records the internal and external issues and the interested parties relevant to the Company's information security, and defines the boundaries and applicability of the ISMS, in line with ISO/IEC 27001:2022 clauses 4.1 to 4.3.</div>
+  <div class="note p">
+    <span class="tag">Concept</span>
+    <p>Keep the purpose to two or three sentences. Its job is to tell a reader (or auditor) which clauses this document satisfies.</p>
+  </div>
+</section>
+
+<!-- 2 ISSUES -->
+<section id="issues">
+  <div class="sec-head"><span class="num">02</span><h2>Internal and external issues</h2><span class="clause">4.1</span></div>
+  <div class="note b">
+    <span class="tag">Standard requires</span>
+    <p>The organisation determines the external and internal issues that are relevant to its purpose and that affect its ability to achieve the intended outcomes of the ISMS. Since Amendment 1 (2024), it must also determine whether <b>climate change</b> is a relevant issue.</p>
+  </div>
+  <div class="note p">
+    <span class="tag">Concept: How ISO updates a standard</span>
+    <p>ISO doesn't reissue the whole standard for a small change. It publishes an <b>amendment</b> (Amd): A short, separate document that adds or changes specific clauses. You then read the two together, written as <b>ISO/IEC 27001:2022 + Amd 1:2024</b>.</p>
+    <ul>
+      <li><b>Amendment (Amd):</b> Adds or changes requirements. Example: Amd 1:2024 added the climate change text to 4.1 and 4.2.</li>
+      <li><b>Technical Corrigendum (Cor):</b> Only fixes errors in the text. Example: ISO 27001:2013 had Cor 1:2014 and Cor 2:2015.</li>
+      <li><b>New edition:</b> A full rewrite when the changes are big. Example: 2013 → 2022.</li>
+    </ul>
+    <p>Tip: When you buy or check the standard, always ask "are there amendments?" so you're reading the current requirements.</p>
+  </div>
+  <div class="note p">
+    <span class="tag">Concept</span>
+    <p>An "issue" is any condition, inside or outside the company, that could help or hurt information security. <b>External</b> = Things you cannot control (laws, threats, market). <b>Internal</b> = Things you can (structure, people, technology, culture).</p>
+  </div>
+  <div class="howto">
+    <h3>How to identify the issues for any organisation</h3>
+    <ol>
+      <li>Hold a short workshop with top management and the heads of IT, HR, Legal and Operations.</li>
+      <li>Collect inputs: Business strategy, organisation chart, client contracts, list of applicable laws, previous incidents and audit findings, the IT landscape.</li>
+      <li>Go through each external category (laws, market, threats, suppliers, technology, environment) and each internal one (structure, people, processes, technology, culture, resources).</li>
+      <li>For each issue, write down its impact on information security and how the ISMS responds (see Option C below).</li>
+      <li>Get the list approved by management and review it at least once a year.</li>
+    </ol>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Type</th><th>Areas to check in every organisation</th></tr></thead>
+    <tbody>
+      <tr><td>External</td><td>Laws and regulations that apply (data protection, sector rules, national cyber laws); client and market expectations; the threat landscape; key suppliers and cloud dependency; economic conditions; environment and climate</td></tr>
+      <tr><td>Internal</td><td>Organisation structure and governance; workforce model (office, hybrid, remote); technology and hosting; processes and documentation maturity; security culture; budget, people and skills</td></tr>
+    </tbody>
+  </table></div>
+  <div class="ex">
+    <span class="tag">Worked example</span>
+    <ul>
+      <li><b>External:</b> Regulatory (GDPR, Cap. 586, NIS2, DORA), market and client expectations, threat landscape, reliance on cloud.</li>
+      <li><b>Internal:</b> Organisation structure, hybrid workforce, Azure hosting, culture, resources.</li>
+    </ul>
+  </div>
+  <p>Three formats work. Pick one, or combine PESTLE (external) with SWOT (both).</p>
+
+  <h3>Option A: PESTLE (external issues)</h3>
+  <div class="note p">
+    <span class="tag">Concept</span>
+    <p>PESTLE is a checklist of six lenses so you don't forget a category of external issue: Political, Economic, Social, Technological, Legal, Environmental.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Category</th><th>General European examples</th></tr></thead>
+    <tbody>
+      <tr><td>Political</td><td>EU digital sovereignty push (preference for EU cloud providers); geopolitical tension raising state-sponsored cyber threats; sanctions affecting suppliers in certain countries</td></tr>
+      <tr><td>Economic</td><td>Inflation squeezing security budgets; cyber insurance premiums rising and insurers demanding controls (MFA, backups); shortage of security professionals in the EU labour market</td></tr>
+      <tr><td>Social</td><td>Hybrid and remote work as the norm; growing public awareness of privacy; customers expecting fast breach notification</td></tr>
+      <tr><td>Technological</td><td>Cloud dependency (AWS, Azure, Google); AI-generated phishing and deepfakes; ransomware-as-a-service; legacy systems in hospitals and manufacturing</td></tr>
+      <tr><td>Legal</td><td>GDPR (all sectors); NIS2 (essential and important entities, e.g. energy, health, transport, digital infrastructure); DORA (financial entities and their ICT providers); EU AI Act; Cyber Resilience Act (products with digital elements); national laws transposing NIS2</td></tr>
+      <tr><td>Environmental</td><td>Climate change: Floods, heatwaves affecting data centres, energy price volatility, sustainability reporting (CSRD)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note o">
+    <span class="tag">Auditor tip</span>
+    <p>The 2024 amendment requires you to <b>decide whether</b> climate change is relevant, not to declare it relevant. If you conclude it isn't, write down why. Saying nothing at all is the finding.</p>
+  </div>
+
+  <h3>Option B: SWOT (internal + external)</h3>
+  <div class="note p">
+    <span class="tag">Concept</span>
+    <p>SWOT splits issues on two axes. Rows: <b>Internal</b> vs <b>external</b>. Columns: <b>Helpful</b> vs <b>harmful</b>. Strengths and weaknesses are internal; opportunities and threats are external. Example for a mid-sized European SaaS company:</p>
+  </div>
+  <div class="tbl"><table class="swot">
+    <thead><tr><th></th><th>Helpful</th><th>Harmful</th></tr></thead>
+    <tbody>
+      <tr><td>Internal</td><td><b>Strengths:</b> Cloud-native architecture, security-aware engineering team, existing GDPR programme</td><td><b>Weaknesses:</b> Small security team, undocumented processes, shadow IT, weak asset inventory</td></tr>
+      <tr><td>External</td><td><b>Opportunities:</b> Certification opens enterprise and public-sector tenders; NIS2/DORA clients look for compliant suppliers</td><td><b>Threats:</b> Ransomware, supply chain attacks, new regulation with high fines, key supplier failure</td></tr>
+    </tbody>
+  </table></div>
+  <p>The same grid looks different in other sectors. Every organisation has all four quadrants, so each example below is complete:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Sector</th><th>Strength</th><th>Weakness</th><th>Opportunity</th><th>Threat</th></tr></thead>
+    <tbody>
+      <tr><td>Hospital</td><td>Clinical staff trust and established procedures</td><td>Legacy medical devices that can't be patched</td><td>Digital health funding for modernisation</td><td>Ransomware disrupting patient care</td></tr>
+      <tr><td>Bank</td><td>Mature risk culture</td><td>Complex legacy core banking</td><td>DORA programme budget drives security improvements</td><td>DORA supervisory scrutiny and third-party concentration risk</td></tr>
+      <tr><td>Manufacturer</td><td>Strong safety culture and disciplined change control on the production floor</td><td>OT networks connected to IT</td><td>Industry 4.0 projects allow security to be designed in from the start</td><td>Production stoppage from an attack</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Option C: Simple issues table</h3>
+  <div class="note p">
+    <span class="tag">Concept</span>
+    <p>This is the format auditors like most, because each issue shows its <b>impact</b> and <b>how the ISMS responds</b>. That last column is what proves the context actually drives your controls.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Issue</th><th>Int / Ext</th><th>Impact on the ISMS</th><th>How it is addressed</th></tr></thead>
+    <tbody>
+      <tr><td>Subject to NIS2 as an important entity</td><td><span class="pill">External</span></td><td>Mandatory risk management measures, 24-hour early warning for significant incidents</td><td>Incident Management Policy, risk methodology, legal register</td></tr>
+      <tr><td>Main platform hosted on a public cloud provider</td><td><span class="pill">Internal</span></td><td>Availability and security depend on a third party</td><td>Supplier and Cloud Security Policies, shared responsibility model</td></tr>
+      <tr><td>Shortage of skilled security staff</td><td><span class="pill">External</span></td><td>Risk of single points of knowledge</td><td>Competence matrix, documented procedures, managed service provider</td></tr>
+      <tr><td>Large share of staff working remotely</td><td><span class="pill">Internal</span></td><td>Larger attack surface, endpoint risk</td><td>Remote Working Policy, endpoint controls, awareness training</td></tr>
+      <tr><td>Climate-related heatwaves and floods</td><td><span class="pill">External</span></td><td>Possible data centre or office disruption</td><td>Business continuity plan, multi-region hosting</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note o">
+    <span class="tag">Common mistake</span>
+    <p>Copying a generic list that could describe any company. An auditor will ask "how does this issue show up in your risk register?" If an issue has no link to a risk, control or objective, it is decoration.</p>
+  </div>
+</section>
+
+<!-- 3 INTERESTED PARTIES -->
+<section id="parties">
+  <div class="sec-head"><span class="num">03</span><h2>Interested parties and their requirements</h2><span class="clause">4.2</span></div>
+  <div class="note b">
+    <span class="tag">Standard requires</span>
+    <ol type="a">
+      <li>Determine the interested parties relevant to the ISMS.</li>
+      <li>Determine their relevant requirements.</li>
+      <li>Determine which of those requirements will be addressed through the ISMS. <b>(new in 2022)</b></li>
+    </ol>
+  </div>
+  <div class="note p">
+    <span class="tag">Concept</span>
+    <p>An interested party (stakeholder) is anyone who can affect, be affected by, or believe they are affected by your information security. Point (c) exists because not every requirement belongs to the ISMS. A client's pricing demand is real, but it is not an information security requirement.</p>
+  </div>
+  <div class="howto">
+    <h3>How to build the list for any organisation</h3>
+    <ol>
+      <li>List everyone who relies on, regulates, supplies, owns or works for the organisation.</li>
+      <li>Find their requirements in real sources: Contracts and SLAs, data processing agreements, laws and regulator guidance, tender questionnaires, insurance policies, staff handbook.</li>
+      <li>For each requirement, decide: Is it about information security? If yes, mark it "Yes" and name the policy, process or control that meets it. If no, mark it "No" and say where else it is handled.</li>
+      <li>Feed the "Yes" requirements into the legal and contractual register (control 5.31) and the risk assessment.</li>
+    </ol>
+  </div>
+  <p>Template with typical parties found in most organisations:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Interested party</th><th>Typical requirement</th><th>Via ISMS?</th><th>Typical way it is addressed</th></tr></thead>
+    <tbody>
+      <tr><td>Clients / customers</td><td>Confidentiality of their data, agreed availability, proof of security (certificate, questionnaires), breach notification</td><td><span class="pill">Yes</span></td><td>Contracts, SLA monitoring, certification, incident management</td></tr>
+      <tr><td>Employees and contractors</td><td>Clear rules, protection of their personal data, secure working tools</td><td><span class="pill">Yes</span></td><td>Acceptable use policy, awareness training, HR privacy notice</td></tr>
+      <tr><td>Owners / top management / board</td><td>Protect reputation and revenue, meet legal duties, support business growth</td><td><span class="pill">Yes</span></td><td>ISMS objectives, management review, risk reporting</td></tr>
+      <tr><td>Regulators and authorities</td><td>Compliance with data protection and sector laws, incident reporting within legal deadlines</td><td><span class="pill">Yes</span></td><td>Legal register, privacy programme, incident procedure</td></tr>
+      <tr><td>Suppliers and service providers</td><td>Customer meets its side of shared responsibilities; payment and commercial terms</td><td><span class="pill">Partly</span></td><td>Supplier security policy and reviews; commercial terms handled by Finance/Procurement</td></tr>
+      <tr><td>Auditors (internal, external, certification body)</td><td>Access to evidence, conformity with the standard</td><td><span class="pill">Yes</span></td><td>Internal audit programme, document control</td></tr>
+      <tr><td>Insurers</td><td>Minimum controls such as MFA, backups, EDR</td><td><span class="pill">Yes</span></td><td>Access control, backup and endpoint standards</td></tr>
+      <tr><td>Partners, public, media</td><td>Trust, honest communication after an incident</td><td><span class="pill">Partly</span></td><td>Incident communication plan; general PR handled by Marketing</td></tr>
+    </tbody>
+  </table></div>
+  <div class="ex">
+    <span class="tag">Worked example</span>
+    <ul>
+      <li><b>Clients:</b> Confidentiality of their data, availability per SLA, ISO 27001 certificate; financial-sector clients pass down DORA obligations.</li>
+      <li><b>Employees:</b> Secure tools for remote work, protection of HR data.</li>
+      <li><b>Shareholders / management:</b> Win certified-supplier tenders.</li>
+      <li><b>Regulators:</b> IDPC for GDPR and Cap. 586 (Malta's Data Protection Act), 72-hour breach notification; MFSA where relevant.</li>
+      <li><b>Suppliers:</b> Microsoft (Azure, M365) expects the company to secure its side of the shared responsibility model.</li>
+      <li><b>Auditors:</b> Certification body and internal auditor.</li>
+    </ul>
+  </div>
+  <div class="note o">
+    <span class="tag">Auditor tip</span>
+    <p>If you mark a requirement "No / not via ISMS", say where it <i>is</i> handled. An empty answer looks like an oversight.</p>
+  </div>
+</section>
+
+<!-- 4 SCOPE -->
+<section id="scope">
+  <div class="sec-head"><span class="num">04</span><h2>ISMS scope</h2><span class="clause">4.3</span></div>
+  <div class="note b">
+    <span class="tag">Standard requires</span>
+    <p>Determine the boundaries and applicability of the ISMS, considering the issues in 4.1, the requirements in 4.2, and the <b>interfaces and dependencies</b> between your activities and those performed by other organisations. The scope must be available as documented information.</p>
+  </div>
+
+  <div class="note p">
+    <span class="tag">Concept</span>
+    <p>Scope answers one question: <b>What exactly does the ISMS protect?</b> You draw a line around the organisation. Everything inside must follow the ISMS; everything outside must be named, with a reason, and any connection across the line must be managed. A scope has five parts, covered below.</p>
+  </div>
+
+  <h3>a) Scope statement</h3>
+  <p>One or two sentences, the same wording that will appear on the certificate. Fill in this template:</p>
+  <div class="tpl">The information security management system of <em>[organisation name]</em> covering <em>[activities, products or services]</em>, provided from <em>[locations / remote work]</em>, <em>[optional: supported by named departments]</em>.</div>
+  <div class="note p">
+    <span class="tag">Concept</span>
+    <p>Write it so a client reading the certificate understands what is covered: <b>What</b> (services/products), <b>Where</b> (locations), <b>Who</b> (teams). Avoid vague wording like "all IT systems"; name the business activity.</p>
+  </div>
+  <div class="ex">
+    <span class="tag">Worked example</span>
+    <div class="scope">The information security management system covering the development, hosting, operation and support of the Company's SaaS platform, delivered from the Malta office and by remote staff.</div>
+  </div>
+  <div class="note o">
+    <span class="tag">Auditor tip: Do we need the SoA version in the scope?</span>
+    <p>No. ISO 27001 clause 4.3 does not ask for it, so your own scope statement can leave it out (as above). You will still often see it on the <b>certificate</b>, because ISO/IEC 27006 (the rules for certification bodies) requires the certificate to reference the SoA version. The certification body adds that, not you. Keeping it out of your scope statement also means you don't have to update the scope every time the SoA changes.</p>
+  </div>
+
+  <h3>b) Organisational boundaries</h3>
+  <p>Which parts of the organisation are inside the line. List:</p>
+  <ul>
+    <li><b>Legal entities:</b> Which company or companies (important in groups with subsidiaries).</li>
+    <li><b>Departments and teams:</b> Usually every team that touches in-scope information, including support functions like HR, Finance and Facilities.</li>
+    <li><b>Locations:</b> Offices, data centres, warehouses, and remote or home working.</li>
+    <li><b>People:</b> Employees, contractors, interns, and third-party staff with access.</li>
+  </ul>
+  <div class="ex">
+    <span class="tag">Worked example</span>
+    <ul><li>Departments: Engineering, Operations, Support, HR, Management.</li><li>Locations: Malta office, remote workers.</li></ul>
+  </div>
+
+  <h3>c) Technical boundaries</h3>
+  <p>Which systems and technology are inside the line. Go through each category below and name what the organisation actually uses. The two example columns show how different setups fill the same category.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Category</th><th>What to name</th><th>Example: Cloud company</th><th>Example: On-premises company</th></tr></thead>
+    <tbody>
+      <tr><td>Products / applications</td><td>The systems that deliver the in-scope service, and all their environments</td><td>SaaS platform (production, staging)</td><td>ERP (Enterprise Resource Planning: One system that runs finance, HR, purchasing and stock, such as SAP or Microsoft Dynamics), internal business apps</td></tr>
+      <tr><td>Hosting</td><td>Where those systems run</td><td>Azure / AWS / Google Cloud accounts</td><td>Own server room, colocation data centre</td></tr>
+      <tr><td>Identity</td><td>Where users and logins are managed</td><td>Microsoft Entra ID, Okta</td><td>Active Directory</td></tr>
+      <tr><td>Email and collaboration</td><td>Where staff store and share information</td><td>Microsoft 365, Google Workspace</td><td>Exchange server, file shares</td></tr>
+      <tr><td>Endpoints</td><td>Devices people use</td><td>Laptops, mobile phones</td><td>Desktops, shop-floor or OT terminals</td></tr>
+      <tr><td>Networks</td><td>How systems connect</td><td>Cloud virtual networks, VPN</td><td>LAN, WAN, firewalls, Wi-Fi</td></tr>
+      <tr><td>Supporting tools</td><td>Tools that run or protect the above</td><td>CI/CD pipeline, backups, SIEM, ticketing</td><td>Backup servers, monitoring, ticketing</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note o">
+    <span class="tag">Auditor tip</span>
+    <p>Decide explicitly whether <b>test and development environments</b> are in scope. They often hold copies of real client data, and auditors ask about them. Name the cloud accounts or subscriptions precisely, so anyone can tell which resources the controls cover.</p>
+  </div>
+  <div class="ex">
+    <span class="tag">Worked example</span>
+    <ul>
+      <li><b>The platform and its environments (production, staging):</b> The product the company sells, plus its pre-release copy.</li>
+      <li><b>Azure subscriptions and tenants:</b> The cloud accounts where the platform runs; naming them shows exactly which cloud resources are covered.</li>
+      <li><b>Microsoft 365 and endpoint estate:</b> Email, Teams, SharePoint, OneDrive, and the staff laptops and phones that access them.</li>
+    </ul>
+  </div>
+
+  <h3>d) Interfaces and dependencies</h3>
+  <p>Activities performed by other organisations that the in-scope service depends on (clause 4.3 c). For each one, say who controls it and how you manage the connection.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Typical dependency</th><th>Who controls it</th><th>How the interface is managed</th></tr></thead>
+    <tbody>
+      <tr><td>Cloud or hosting provider (data centres, hardware)</td><td>Provider</td><td>Shared responsibility model, review of the provider's ISO 27001 / SOC 2 reports, supplier assessment</td></tr>
+      <tr><td>Outsourced services (managed IT, SOC, payroll, development)</td><td>Supplier</td><td>Contract security clauses, NDAs, periodic supplier review</td></tr>
+      <tr><td>Parent company or shared group services</td><td>Group</td><td>Intra-group agreement, defined responsibilities</td></tr>
+      <tr><td>Office building access and utilities</td><td>Landlord</td><td>Lease terms, own access control inside the premises</td></tr>
+      <tr><td>Internet and telecom</td><td>Telecom provider</td><td>SLA, redundant connection where needed</td></tr>
+    </tbody>
+  </table></div>
+  <div class="ex">
+    <span class="tag">Worked example</span>
+    <ul>
+      <li><b>Azure data centres:</b> Controlled by Microsoft; managed through the shared responsibility model and Microsoft's ISO 27001 / SOC 2 reports.</li>
+      <li><b>Outsourced suppliers:</b> For example managed SOC and payroll; managed through contract clauses and supplier reviews.</li>
+      <li><b>Malta office building:</b> Controlled by the landlord; the company runs its own access control inside the office.</li>
+    </ul>
+  </div>
+
+  <h3>e) Exclusions, with justification</h3>
+  <p>Anything left outside the line (a subsidiary, a site, a product line) must be named with a reason. A good justification shows the excluded part does not share systems, data or people with the in-scope part.</p>
+  <div class="note o">
+    <span class="tag">Common mistake</span>
+    <p>Two different kinds of "exclusion" get mixed up:</p>
+    <ul>
+      <li><b>Scope exclusions</b> (a business unit, a site, a product) go here, with justification.</li>
+      <li><b>Annex A control exclusions</b> go in the Statement of Applicability (6.1.3 d), not in the scope.</li>
+      <li>Clauses 4 to 10 can <b>never</b> be excluded.</li>
+    </ul>
+    <p>An auditor will also check that an excluded part doesn't share systems or people with the in-scope part. If it does, the boundary isn't real.</p>
+  </div>
+</section>
+
+<!-- 5 REVIEW -->
+<section id="review">
+  <div class="sec-head"><span class="num">05</span><h2>Review</h2><span class="clause">9.3.2</span></div>
+  <p>State when the document is reviewed: at minimum <b>annually</b> and as an <b>input to each management review</b>.</p>
+  <div class="note b">
+    <span class="tag">Standard requires</span>
+    <p>Management review inputs include <b>9.3.2 b</b> changes in external and internal issues relevant to the ISMS, and <b>9.3.2 c</b> changes in needs and expectations of interested parties (added in 2022).</p>
+  </div>
+  <div class="note p">
+    <span class="tag">Concept</span>
+    <p>Context is not a one-time exercise. If something changes (a new regulation, a new cloud provider, a merger), update this document. That update can then ripple into the <b>scope</b>, the <b>risks</b> and the <b>objectives</b>. This is the loop shown in the big picture above.</p>
+  </div>
+  <div class="note o">
+    <span class="tag">Auditor tip</span>
+    <p>Keep a revision history table (version, date, author, change summary, approver). In the surveillance audit, the first thing they check is whether the "annual" review actually happened.</p>
+  </div>
+</section>
+
+<!-- CHECK -->
+<section id="check">
+  <div class="sec-head"><h2>Check yourself</h2></div>
+  <details><summary>Which parts of clause 4 should be documented, and where is that written?</summary><p>All three: Issues (4.1), interested parties (4.2) and scope (4.3). For the scope it is written directly in clause 4.3: "The scope shall be available as documented information." For 4.1 and 4.2, it comes from three other places in the standard:</p>
+    <p><b>7.5.1 b:</b> The ISMS must include the documented information the organisation decides is necessary for its effectiveness. Context and interested parties are needed for the risk assessment and objectives, so they belong there.</p>
+    <p><b>Annex A 5.31:</b> Legal, statutory, regulatory and contractual requirements must be identified, <b>documented</b> and kept up to date. This covers a large part of the 4.2 requirements.</p>
+    <p><b>9.3.2 b and c:</b> Management review must look at <b>changes</b> in issues and interested parties. You can only show a change if the previous version was recorded.</p></details>
+  <details><summary>What did ISO 27001:2022 add to 4.2?</summary><p>Point (c): Determine which interested-party requirements will be addressed through the ISMS.</p></details>
+  <details><summary>What does Amendment 1 (2024) require about climate change?</summary><p>Determine whether climate change is a relevant issue (4.1), and a note that interested parties can have climate-related requirements (4.2).</p></details>
+  <details><summary>Where do you justify excluding an Annex A control?</summary><p>In the Statement of Applicability (6.1.3 d), not in the scope document.</p></details>
+  <details><summary>Which management review inputs link back to this document?</summary><p>9.3.2 b (changes in internal/external issues) and 9.3.2 c (changes in interested parties' needs and expectations).</p></details>
+</section>
+
+<!-- NORM TEXT -->
+<section id="norm">
+  <div class="sec-head"><h2>Reference: What ISO 27001 says</h2><span class="clause">Clause 4</span></div>
+  <p>The original requirement text, kept here so you can compare the notes above with the standard itself.</p>
+
+  <div class="norm">
+    <span class="tag">ISO/IEC 27001:2022 · 4 Context of the organization</span>
+    <h3>4.1 Understanding the organization and its context</h3>
+    <p>The organization shall determine external and internal issues that are relevant to its purpose and that affect its ability to achieve the intended outcome(s) of its information security management system.</p>
+    <p class="note-iso">NOTE Determining these issues refers to establishing the external and internal context of the organization considered in Clause 5.4.1 of ISO 31000:2018.</p>
+    <p class="amd"><b>Added by Amd 1:2024:</b> The organization shall determine whether climate change is a relevant issue.</p>
+  </div>
+
+  <div class="norm">
+    <h3>4.2 Understanding the needs and expectations of interested parties</h3>
+    <p>The organization shall determine:</p>
+    <ol>
+      <li>a) interested parties that are relevant to the information security management system;</li>
+      <li>b) the relevant requirements of these interested parties;</li>
+      <li>c) which of these requirements will be addressed through the information security management system.</li>
+    </ol>
+    <p class="note-iso">NOTE The requirements of interested parties can include legal and regulatory requirements and contractual obligations.</p>
+    <p class="amd"><b>Added by Amd 1:2024 (NOTE 2):</b> Relevant interested parties can have requirements related to climate change.</p>
+  </div>
+
+  <div class="norm">
+    <h3>4.3 Determining the scope of the information security management system</h3>
+    <p>The organization shall determine the boundaries and applicability of the information security management system to establish its scope.</p>
+    <p>When determining this scope, the organization shall consider:</p>
+    <ol>
+      <li>a) the external and internal issues referred to in 4.1;</li>
+      <li>b) the requirements referred to in 4.2;</li>
+      <li>c) interfaces and dependencies between activities performed by the organization, and those that are performed by other organizations.</li>
+    </ol>
+    <p>The scope shall be available as documented information.</p>
+  </div>
+
+  <div class="norm">
+    <h3>4.4 Information security management system</h3>
+    <p>The organization shall establish, implement, maintain and continually improve an information security management system, including the processes needed and their interactions, in accordance with the requirements of this document.</p>
+  </div>
+</section>
+
+<footer>Study notes for ISO/IEC 27001:2022 incl. Amd 1:2024. Example content is illustrative; adapt it to the real organisation before use.</footer>
+</div>
